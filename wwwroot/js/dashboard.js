@@ -1667,8 +1667,8 @@ async function PostCallToAction() {
 }
 async function dateFilterDefault() {
     document.getElementById("dateFilterModal").style.display = "flex";
-    document.getElementById("dateFrom").value = lastWeekDate;
-    document.getElementById("dateTo").value = currentDate;
+    //document.getElementById("dateFrom").value = lastWeekDate;
+    //document.getElementById("dateTo").value = currentDate;
 }
 
 async function dateFilter() {
@@ -1683,9 +1683,148 @@ async function dateFilter() {
     $('#selectDateForUserCount').click(function () {
 
         dateFilterDefault();
-
         type = 1;
     });
+    //Universal Date
+    
+    $('#selectDateUniversal').click(function () {
+        dateFilterDefault();
+    });
+    $('#ImportUniversal').click(function () {
+        var category = $('#cta-opt').val();
+        var startdate = $('#dateFrom').val();
+        var enddate = $('#dateTo').val();
+        location.replace("/Dashboard/ExportDashboardExcel?category=" + category + "&startdate=" + startdate + "&enddate=" + enddate);
+    });
+    $('#quickSelectDateUniversal').on('change', function () {
+        var value = document.getElementById('quickSelectDateUniversal').value;
+        //alert(value)
+        toDate = new Date();
+        const formattoDate = (toDate) => {
+            let year = toDate.getFullYear();
+            let month = toDate.getMonth() + 1; // Month is zero-indexed, so add 1
+            let day = toDate.getDate();
+            // Ensure month and day are always two digits
+            if (month < 10) month = '0' + month;
+            if (day < 10) day = '0' + day;
+            return `${year}-${month}-${day}`;
+        };
+        
+        document.getElementById('dateTo').value = formattoDate(toDate);
+        if (value == 1) {
+            document.getElementById('dateFrom').value = formattoDate(toDate);
+        }
+        else if (value == 7) {
+            var formatOTFromDate = (toDate) => {
+                let year = toDate.getFullYear();
+                let month = toDate.getMonth() + 1; // Month is zero-indexed, so add 1
+                let day = toDate.getDate();
+                // Ensure month and day are always two digits
+                if (month < 10) month = '0' + month;
+                if (day < 10) day = '0' + day;
+                return `${year}-${month}-${day}`;
+            };
+            
+            var someDate = new Date(formatOTFromDate(toDate));
+            const resultDate = new Date(someDate);
+            var filteredDays = new Date(resultDate.setDate(someDate.getDate() - 7));
+            document.getElementById('dateFrom').value = formatOTFromDate(filteredDays);
+        }
+        else if (value == 15) {
+            var formatOTFromDate = (toDate) => {
+                let year = toDate.getFullYear();
+                let month = toDate.getMonth() + 1; // Month is zero-indexed, so add 1
+                let day = toDate.getDate();
+                // Ensure month and day are always two digits
+                if (month < 10) month = '0' + month;
+                if (day < 10) day = '0' + day;
+                return `${year}-${month}-${day}`;
+            };
+
+            var someDate = new Date(formatOTFromDate(toDate));
+            const resultDate = new Date(someDate);
+            var filteredDays = new Date(resultDate.setDate(someDate.getDate() - 15));
+            document.getElementById('dateFrom').value = formatOTFromDate(filteredDays);
+        }
+        else if (value == 30) {
+            var formatOTFromDate = (toDate) => {
+                let year = toDate.getFullYear();
+                let month = toDate.getMonth(); // Month is zero-indexed, so add 1
+                let day = toDate.getDate();
+                // Ensure month and day are always two digits
+                if (month < 10) month = '0' + month;
+                if (day < 10) day = '0' + day;
+                return `${year}-${month}-${day}`;
+            };
+            document.getElementById('dateFrom').value = formatOTFromDate(toDate);
+        }
+        else if (value == 12) {
+            var formatOTFromDate = (toDate) => {
+                let year = toDate.getFullYear() - 1;
+                let month = toDate.getMonth() + 1; // Month is zero-indexed, so add 1
+                let day = toDate.getDate();
+                // Ensure month and day are always two digits
+                if (month < 10) month = '0' + month;
+                if (day < 10) day = '0' + day;
+                return `${year}-${month}-${day}`;
+            };
+            document.getElementById('dateFrom').value = formatOTFromDate(toDate);
+        }
+        applyDateFilterUniversal();
+    });
+    async function ExportDashboad() {
+        var data = {};
+            data.startDate = null;
+            data.endDate = null;
+            data.ctaCategory = null;
+        $.ajax({
+            url: "/Dashboard/ExportDashboardExcel",
+            data: { data: data, },
+            type: "POST",
+            datatype: "json"
+        }).done(function (data) {
+            alert("Exported")
+        });
+    }
+    function applyDateFilterUniversal() {
+        day = 0;
+        startdate = document.getElementById("dateFrom").value;
+        enddate = document.getElementById("dateTo").value;
+        document.getElementById("dateFilterModal").style.display = "none";
+        restoday = 0;
+        hotelday = 0;
+        storeday = 0;
+        wellnessday = 0;
+        offerday = 0;
+        document.getElementById('cta-day').value = 0;
+       
+        postNewUser();
+        runTopRestoChart();
+        restostartdate = startdate;
+        restoenddate = enddate;
+        runTopHotelChart();
+        hotelstartdate = startdate;
+        hotelenddate = enddate;
+        runTopStoreChart();
+        storestartdate = startdate;
+        storeenddate = enddate;
+        runTopWellnessChart();
+        wellnessstartdate = startdate;
+        wellnessenddate = enddate;
+        offerstartdate = startdate;
+        offerenddate = enddate;
+        runTopOfferChart();
+        nfcstartdate = startdate;
+        nfcendtdate = enddate;
+        cntTable.destroy();
+        PostClickCountTop2();
+        ctastartdate = startdate;
+        ctaendtdate = enddate;
+        ctaday = "0";
+        ctaTable.destroy();
+        PostCallToAction();
+    }
+    //Universal Date
     $('#selectDateForTopResto').click(function () {
 
         dateFilterDefault();
@@ -1694,8 +1833,6 @@ async function dateFilter() {
     $('#selectDateForTopHotel').click(function () {
 
         dateFilterDefault();
-
-
         type = 3;
     });
     $('#selectDateForTopStore').click(function () {
