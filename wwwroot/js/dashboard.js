@@ -34,7 +34,7 @@ let currentMonth = (dateToday.getMonth() + 1).toString().padStart(2, '0');;
 let currentYear = dateToday.getFullYear();
 let currentDate = `${currentYear}-${currentMonth}-${currentDay}`;
 //Last Week Date
-var x = 7; // go back 7 days!
+var x = 30; // go back 7 days!
 dateToday.setDate(dateToday.getDate() - x);
 let lastWeekDay = dateToday.getDate().toString().padStart(2, '0');
 let lastWeekMonth = (dateToday.getMonth() + 1).toString().padStart(2, '0');
@@ -60,8 +60,13 @@ var wellnessenddate = currentDate;
 var offerday = 0;
 var offerstartdate = lastWeekDate;
 var offerenddate = currentDate;
+// news feed clicks variable
+var nfcday = 0;
+var nfcstartdate = lastWeekDate;
+var nfcendtdate = currentDate;
 
-
+var ctastartdate = lastWeekDate;
+var ctaendtdate = currentDate;
 
 // call to action variable
 //var ctastartdate = null;
@@ -154,7 +159,7 @@ $('#nu-clear').click(function () {
 });
 $('#mcc-clear').click(function () {
     day = 0;
-    startdate = null;
+    startdate = lastWeekDate;
     enddate = currentDate;
     PostClickCountTop2();
 });
@@ -1519,6 +1524,7 @@ async function PostClickCountTop2() {
     data.day = day;
     data.startdate = nfcstartdate;
     data.enddate = nfcendtdate;
+
     //setTimeout(function () {
     //    $.ajax(
     //        {
@@ -1667,10 +1673,10 @@ async function PostCallToAction() {
 }
 async function dateFilterDefault() {
     document.getElementById("dateFilterModal").style.display = "flex";
-    //document.getElementById("dateFrom").value = lastWeekDate;
-    //document.getElementById("dateTo").value = currentDate;
 }
 
+document.getElementById("dateFrom").value = lastWeekDate;
+document.getElementById("dateTo").value = currentDate;
 async function dateFilter() {
 
     //Close Date Filter
@@ -1689,6 +1695,7 @@ async function dateFilter() {
     
     $('#selectDateUniversal').click(function () {
         dateFilterDefault();
+        type = 0;
     });
     $('#ImportUniversal').click(function () {
         var category = $('#cta-opt').val();
@@ -1797,7 +1804,7 @@ async function dateFilter() {
         wellnessday = 0;
         offerday = 0;
         document.getElementById('cta-day').value = 0;
-       
+        //fref
         postNewUser();
         runTopRestoChart();
         restostartdate = startdate;
@@ -1880,7 +1887,7 @@ async function dateFilter() {
         if (type == 1) {
             postNewUser();
         }
-        else if (type != 1 && type != 7 && type != 8) {
+        else if (type != 1 && type != 7 && type != 8 && type != 0) {
             switch (type) {
                 case 2:
                     runTopRestoChart();
@@ -1915,6 +1922,9 @@ async function dateFilter() {
             nfcendtdate = enddate;
             cntTable.destroy();
             PostClickCountTop2();
+        }
+        else if (type == 0) {
+            applyDateFilterUniversal();
         }
         else {
             day = 0;
