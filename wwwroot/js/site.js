@@ -829,6 +829,16 @@ async function ShowBusinessTypeList() {
                         '</svg>' +
 
                         '<span >Edit</span>' +
+                        '<a style="cursor: pointer" class="tbl-duplicate" data-id="' + row.id
+                        + '" data-btypename="' + row.businessTypeName
+                        + '" data-promo="' + row.promoText
+                        + '" data-imgurl="' + row.imgURL
+                        + '" data-descrip="' + row.description + '">' +
+                        '<svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24">'+
+                        '<path fill="var(--dark)" d="M4 22h12a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2m2-9h3v-3h2v3h3v2h-3v3H9v-3H6z" />'+
+                        '<path fill = "var(--dark)" d = "M20 2H8v2h12v12h2V4c0-1.103-.897-2-2-2" /> '+
+                        '</svg>'+
+                        '<span >Duplicate</span>' +
                         ' </a>' +
                         '<a class="tbl-delete"  data-id="' + row.id + '" >' +
                         '<svg width="11" height="10" viewBox="0 0 11 10" fill="none"  xmlns="http://www.w3.org/2000/svg">' +
