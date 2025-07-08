@@ -183,7 +183,7 @@ async function ShowprivilegeList() {
             {
                 data: 'dateCreated'
             }
-        ]
+        ], order: [[5, 'desc']]
     });
 }
 async function ShowMembershipList() {
@@ -874,7 +874,7 @@ async function ShowBusinessTypeList() {
             {
                 data: 'dateCreated'
             }
-        ]
+        ], order: [[2, 'desc']]
     });
 }
 

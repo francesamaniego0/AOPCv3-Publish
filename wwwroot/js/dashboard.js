@@ -82,6 +82,29 @@ var days = 0;
 var cntTable;
 var ctaTable;
 var mcrTable;
+async function getCountryList() {
+    const fs = require('fs');
+    const path = require('path');
+
+    // Path to your config file
+    const configPath = 'C:/app/aopc/appconfig.json';
+
+    // Read and parse the JSON file
+    fs.readFile(configPath, 'utf8', (err, data) => {
+        if (err) {
+            console.error('Failed to read config:', err);
+            return;
+        }
+
+        try {
+            const config = JSON.parse(data);
+            console.log(config.Country); // Example: log all countries
+            console.log(config.ConnectionStrings.Constrings); // Example: DB connection string
+        } catch (parseError) {
+            console.error('Invalid JSON:', parseError);
+        }
+    });
+}
 async function companyInformationTableLayout() {
    
 
