@@ -831,10 +831,10 @@ async function viewRestoDetails() {
             {
                 data: 'total'
             }
-            //,
-            //{
-            //    data: 'address'
-            //}
+            ,
+            {
+                data: 'address'
+            }
         ]
     });
 
